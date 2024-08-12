@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
-export const Sort = () => {
-  const sorted = ['популярности', 'цене', 'алфавиту'];
-  const [sort, setSort] = useState(0);
+export const Sort = ({ sort, setSort, setOrderType }) => {
+  const sorted = [
+    { name: 'популярности', sortProperty: 'rating' },
+    { name: 'цене', sortProperty: 'price' },
+    { name: 'алфавит', sortProperty: 'title' },
+  ];
   const [visible, setVisible] = useState(false);
 
   const sortActive = (index) => {
@@ -24,22 +27,25 @@ export const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
+        <button onClick={() => setOrderType('asc')}> ↑ </button>
+        <button onClick={() => setOrderType('desc')}> ↓ </button>
         <div onClick={() => setVisible(true)}>
           <b>Сортировка по:</b>
-          <span>{sorted[sort]}</span>
+          <span>{sort.name}</span>
         </div>
       </div>
       {visible && (
         <div className="sort__popup">
           <ul>
-            {sorted.map((item, index) => {
+            {sorted.map((obj, index) => {
               return (
                 <li
-                  className={sort === index ? 'active' : ''}
+                  // className={sort === index ? 'active' : ''}
+                  className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
                   key={index}
-                  onClick={() => sortActive(index)}
+                  onClick={() => sortActive(obj)}
                 >
-                  {item}
+                  {obj.name}
                 </li>
               );
             })}

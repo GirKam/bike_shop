@@ -1,14 +1,23 @@
-// @import 'variables';
 @import '../variables';
 
 .header {
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+  @media (max-width: 570px) {
+    padding-bottom: 10px;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 570px) {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
   }
 
   &__logo {

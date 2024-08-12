@@ -10,8 +10,16 @@ import '../scss/app.scss';
 export const Home = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [orderType, setOrderType] = useState('desc');
+
+  const [categories, setCategories] = useState(0);
+  const [sort, setSort] = useState({ name: 'популярности', sortProperty: 'rating' });
+
   useEffect(() => {
-    fetch('https://66b753847f7b1c6d8f1b9072.mockapi.io/items')
+    setLoading(true);
+    fetch(
+      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?category=${categories}&sortBy=${sort.sortProperty}&order=${orderType}`,
+    )
       .then((res) => {
         return res.json();
       })
@@ -19,13 +27,14 @@ export const Home = () => {
         setItems(json);
         setLoading(false);
       });
-  }, []);
+  }, [categories, sort, orderType]);
+  console.log(categories, sort);
 
   return (
     <div>
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories categories={categories} setCategories={setCategories} />
+        <Sort orderType={orderType} setOrderType={setOrderType} sort={sort} setSort={setSort} />
       </div>
       <h2 className="content__title">Все велосипеды</h2>
       <div className="content__items">
