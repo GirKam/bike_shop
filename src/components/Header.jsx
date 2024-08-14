@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-export const Header = () => {
+import { Search } from './Search';
+export const Header = ({ setSearch, search }) => {
   return (
     <div className="header">
       <div className="container">
@@ -13,6 +14,7 @@ export const Header = () => {
             </div>
           </div>
         </Link>
+        <Search search={search} setSearch={setSearch} />
         <Link to={'/cart'}>
           <div className="header__cart">
             <div className="button button--cart">

@@ -7,18 +7,20 @@ import Skeleton from '../components/Skeleton';
 
 import '../scss/app.scss';
 
-export const Home = () => {
+export const Home = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [orderType, setOrderType] = useState('desc');
 
   const [categories, setCategories] = useState(0);
   const [sort, setSort] = useState({ name: 'популярности', sortProperty: 'rating' });
+  const search = searchValue ? `search=${searchValue}` : '';
+  const category = categories ? `category=${categories}` : '';
 
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?category=${categories}&sortBy=${sort.sortProperty}&order=${orderType}`,
+      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${search}&sortBy=${sort.sortProperty}&order=${orderType}`,
     )
       .then((res) => {
         return res.json();
@@ -27,8 +29,7 @@ export const Home = () => {
         setItems(json);
         setLoading(false);
       });
-  }, [categories, sort, orderType]);
-  console.log(categories, sort);
+  }, [category, sort, orderType, search]);
 
   return (
     <div>
