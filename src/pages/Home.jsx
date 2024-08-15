@@ -4,6 +4,7 @@ import { BicycleItem } from '../components/BicycleItem';
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
 import Skeleton from '../components/Skeleton';
+import { Pagination } from '../components/Pagination';
 
 import '../scss/app.scss';
 
@@ -31,6 +32,10 @@ export const Home = ({ searchValue }) => {
       });
   }, [category, sort, orderType, search]);
 
+  const bikeItem = items.map((item) => {
+    return <BicycleItem key={item.id} {...item} />;
+  });
+
   return (
     <div>
       <div className="content__top">
@@ -39,11 +44,14 @@ export const Home = ({ searchValue }) => {
       </div>
       <h2 className="content__title">Все велосипеды</h2>
       <div className="content__items">
-        {loading
-          ? [...new Array(3)].map((_, index) => <Skeleton key={index} />)
-          : items.map((item) => {
-              return <BicycleItem key={item.id} {...item} />;
-            })}
+        {loading ? (
+          [...new Array(3)].map((_, index) => <Skeleton key={index} />)
+        ) : (
+          // items.map((item) => {
+          //     return <BicycleItem key={item.id} {...item} />;
+          //   })
+          <Pagination totalItems={bikeItem} />
+        )}
       </div>
     </div>
   );
