@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { BicycleItem } from '../components/BicycleItem';
 import { Categories } from '../components/Categories';
@@ -6,21 +6,23 @@ import { Sort } from '../components/Sort';
 import Skeleton from '../components/Skeleton';
 
 import '../scss/app.scss';
+import { AppContext } from '../App';
 
-export const Home = ({ searchValue }) => {
+export const Home = () => {
+  const { searchValue } = useContext(AppContext);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [orderType, setOrderType] = useState('desc');
 
   const [categories, setCategories] = useState(0);
   const [sort, setSort] = useState({ name: 'популярности', sortProperty: 'rating' });
-  const search = searchValue ? `search=${searchValue}` : '';
+  const searchVal = searchValue ? `search=${searchValue}` : '';
   const category = categories ? `category=${categories}` : '';
 
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${search}&sortBy=${sort.sortProperty}&order=${orderType}`,
+      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${searchVal}&sortBy=${sort.sortProperty}&order=${orderType}`,
     )
       .then((res) => {
         return res.json();
@@ -29,7 +31,7 @@ export const Home = ({ searchValue }) => {
         setItems(json);
         setLoading(false);
       });
-  }, [category, sort, orderType, search]);
+  }, [category, sort, orderType, searchVal]);
 
   return (
     <div>

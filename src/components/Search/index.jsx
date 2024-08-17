@@ -1,17 +1,21 @@
 import React from 'react';
 import styles from './Search.module.scss';
+import { useContext } from 'react';
+import { AppContext } from '../../App';
 
-export const Search = ({ setSearch, search }) => {
+export const Search = () => {
+  const { searchValue, setSearchValue } = useContext(AppContext);
+
   return (
     <div className={styles.root}>
       <input
         className={styles.input}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         placeholder="Поиск..."
       />
-      {search && (
-        <button className={styles.btn} onClick={() => setSearch('')}>
+      {searchValue && (
+        <button className={styles.btn} onClick={() => setSearchValue('')}>
           X
         </button>
       )}
