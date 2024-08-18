@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 
+import { setCategories } from '../redux/slices/filterSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { BicycleItem } from '../components/BicycleItem';
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
@@ -9,15 +12,21 @@ import '../scss/app.scss';
 import { AppContext } from '../App';
 
 export const Home = () => {
+  const dispatch = useDispatch();
+  const categoriesRedux = useSelector((state) => state.filter.category);
+  const sort = useSelector((state) => state.filter.sort);
+
   const { searchValue } = useContext(AppContext);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [orderType, setOrderType] = useState('desc');
 
-  const [categories, setCategories] = useState(0);
-  const [sort, setSort] = useState({ name: 'популярности', sortProperty: 'rating' });
   const searchVal = searchValue ? `search=${searchValue}` : '';
-  const category = categories ? `category=${categories}` : '';
+  const category = categoriesRedux ? `category=${categoriesRedux}` : '';
+
+  const setCategoriesId = (id) => {
+    dispatch(setCategories(id));
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -36,8 +45,8 @@ export const Home = () => {
   return (
     <div>
       <div className="content__top">
-        <Categories categories={categories} setCategories={setCategories} />
-        <Sort orderType={orderType} setOrderType={setOrderType} sort={sort} setSort={setSort} />
+        <Categories categories={categoriesRedux} setCategories={setCategoriesId} />
+        <Sort orderType={orderType} setOrderType={setOrderType} />
       </div>
       <h2 className="content__title">Все велосипеды</h2>
       <div className="content__items">

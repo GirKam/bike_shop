@@ -1,12 +1,7 @@
 import React from 'react';
 
 export const Categories = ({ categories, setCategories }) => {
-  // const [categories, setCategories] = useState(0);
   const categotiesArr = ['Все', 'Шоссейные', 'Гревелы', 'МТБ', 'Городские', 'Двухподвесный'];
-
-  // const onClickCategory = (id) => {
-  //   setCategories(id);
-  // };
 
   return (
     <div className="categories">
