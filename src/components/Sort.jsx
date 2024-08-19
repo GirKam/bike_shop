@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
@@ -11,13 +11,23 @@ export const Sort = ({ setOrderType }) => {
     { name: 'алфавит', sortProperty: 'title' },
   ];
   const [visible, setVisible] = useState(false);
+  const sortRef = useRef();
 
   const sortActive = (obj) => {
     dispatch(setSort(obj));
     setVisible(false);
   };
+
+  useEffect(() => {
+    document.body.addEventListener('click', { once: true }, (e) => {
+      if (!e.composedPath().includes(sortRef.current)) {
+        setVisible(false);
+      }
+    });
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
@@ -44,7 +54,6 @@ export const Sort = ({ setOrderType }) => {
             {sorted.map((obj, index) => {
               return (
                 <li
-                  // className={sort === index ? 'active' : ''}
                   className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
                   key={index}
                   onClick={() => sortActive(obj)}

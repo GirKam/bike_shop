@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-
+import axios from 'axios';
 import { setCategories } from '../redux/slices/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -30,14 +30,12 @@ export const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${searchVal}&sortBy=${sort.sortProperty}&order=${orderType}`,
-    )
+    axios
+      .get(
+        `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${searchVal}&sortBy=${sort.sortProperty}&order=${orderType}`,
+      )
       .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setItems(json);
+        setItems(res.data);
         setLoading(false);
       });
   }, [category, sort, orderType, searchVal]);

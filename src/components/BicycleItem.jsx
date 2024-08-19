@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-
-export const BicycleItem = ({ title, price, imageUrl, sizes, types }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem } from '../redux/slices/cartSlice';
+export const BicycleItem = ({ id, title, price, imageUrl, sizes, types }) => {
+  const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const [typeActiv, setTypeActive] = useState(0);
   const [sizesActiv, setSizesActive] = useState(0);
-
-  const handle = () => {
-    setCount(count + 1);
-  };
-
   const typesNames = ['Черный', 'Серебро'];
+  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+
+  const added = cartItem ? cartItem.count : 0;
+  const onClickAddItems = () => {
+    const itemCart = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typesNames[typeActiv],
+      size: sizesActiv,
+    };
+    dispatch(addItem(itemCart));
+  };
 
   return (
     <div className="bycicle-block__wrapper">
@@ -48,7 +59,7 @@ export const BicycleItem = ({ title, price, imageUrl, sizes, types }) => {
         </div>
         <div className="bycicle-block__bottom">
           <div className="bycicle-block__price">от {price} ₽</div>
-          <button onClick={handle} className="button button--outline button--add">
+          <button onClick={onClickAddItems} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -62,7 +73,7 @@ export const BicycleItem = ({ title, price, imageUrl, sizes, types }) => {
               />
             </svg>
             <span>Добавить</span>
-            <i>{count}</i>
+            {added > 0 && <i>{added}</i>}
           </button>
         </div>
       </div>

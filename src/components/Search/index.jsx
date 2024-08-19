@@ -1,21 +1,43 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styles from './Search.module.scss';
 import { useContext } from 'react';
 import { AppContext } from '../../App';
+import debounce from 'lodash.debounce';
 
 export const Search = () => {
-  const { searchValue, setSearchValue } = useContext(AppContext);
+  const [value, setValue] = useState('');
+  const { setSearchValue } = useContext(AppContext);
+  const inputRef = useRef();
+
+  const handleClear = () => {
+    setSearchValue('');
+    setValue('');
+    inputRef.current.focus();
+  };
+
+  const debounceRef = useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 500),
+    [],
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    debounceRef(e.target.value);
+  };
 
   return (
     <div className={styles.root}>
       <input
+        ref={inputRef}
         className={styles.input}
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={value}
+        onChange={(e) => onChangeInput(e)}
         placeholder="Поиск..."
       />
-      {searchValue && (
-        <button className={styles.btn} onClick={() => setSearchValue('')}>
+      {value && (
+        <button className={styles.btn} onClick={handleClear}>
           X
         </button>
       )}
