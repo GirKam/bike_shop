@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../redux/slices/cartSlice';
 export const BicycleItem = ({ id, title, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
-  const [count, setCount] = useState(0);
   const [typeActiv, setTypeActive] = useState(0);
   const [sizesActiv, setSizesActive] = useState(0);
   const typesNames = ['Черный', 'Серебро'];

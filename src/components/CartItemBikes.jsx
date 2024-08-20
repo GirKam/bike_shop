@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, removeItem, minusItem } from '../redux/slices/cartSlice';
 
-const CartItem = ({ id, title, price, type, imageUrl, count }) => {
+const CartItemBikes = ({ id, title, price, type, imageUrl, count }) => {
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
@@ -97,4 +97,4 @@ const CartItem = ({ id, title, price, type, imageUrl, count }) => {
   );
 };
 
-export default CartItem;
+export default CartItemBikes;

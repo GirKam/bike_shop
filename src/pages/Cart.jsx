@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CartItem from '../components/CartItem';
+import CartItemBikes from '../components/CartItemBikes';
 import { clearItem } from '../redux/slices/cartSlice';
 
 export const Cart = () => {
@@ -16,6 +16,9 @@ export const Cart = () => {
       dispatch(clearItem());
     }
   };
+  if (!totalprice) {
+    return <h1>Корзина Пустая</h1>;
+  }
   return (
     <div className="cart">
       <div className="cart__top">
@@ -94,7 +97,7 @@ export const Cart = () => {
       </div>
       <div className="content__cart">
         {cartItem.map((item) => (
-          <CartItem key={item.id} {...item} />
+          <CartItemBikes key={item.id} {...item} />
         ))}
       </div>
       <div className="cart__bottom">
