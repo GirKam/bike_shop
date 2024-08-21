@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItemBikes from '../components/CartItemBikes';
 import { clearItem } from '../redux/slices/cartSlice';
+import { selectCart } from '../redux/slices/cartSlice';
 
 export const Cart = () => {
-  const cartItem = useSelector((state) => state.cart.items);
-  const totalprice = useSelector((state) => state.cart.totalPrice);
-  const totalCount = cartItem.reduce((prev, item) => prev + item.count, 0);
+  const { items, totalPrice } = useSelector(selectCart);
+  const totalCount = items.reduce((prev, item) => prev + item.count, 0);
 
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ export const Cart = () => {
       dispatch(clearItem());
     }
   };
-  if (!totalprice) {
+  if (!totalPrice) {
     return <h1>Корзина Пустая</h1>;
   }
   return (
@@ -96,7 +96,7 @@ export const Cart = () => {
         </div>
       </div>
       <div className="content__cart">
-        {cartItem.map((item) => (
+        {items.map((item) => (
           <CartItemBikes key={item.id} {...item} />
         ))}
       </div>
@@ -106,7 +106,7 @@ export const Cart = () => {
             Всего велосипедов: <b>{totalCount} шт.</b>
           </span>
           <span>
-            Сумма заказа: <b>{totalprice} ₽</b>
+            Сумма заказа: <b>{totalPrice} ₽</b>
           </span>
         </div>
         <div className="cart__bottom-buttons">

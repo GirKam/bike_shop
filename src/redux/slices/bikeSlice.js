@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchBikes = createAsyncThunk('bike/fetchBikesStatus', async (param) => {
+export const fetchBikes = createAsyncThunk('bike/fetchBikesStatus', async (param, ThunkAPI) => {
   const { category, searchVal, sort, orderType } = param;
   const res = await axios.get(
     `https://66b753847f7b1c6d8f1b9072.mockapi.io/items?${category}${searchVal}&sortBy=${sort.sortProperty}&order=${orderType}`,
   );
+
   return res.data;
 });
+
 const initialState = {
   items: [],
   status: 'loading',
@@ -29,9 +31,7 @@ export const bikeSlice = createSlice({
       })
       .addCase(fetchBikes.fulfilled, (state, action) => {
         state.items = action.payload;
-        //   state.items.push(action.payload);
         state.status = 'success';
-        console.log(state);
       })
       .addCase(fetchBikes.rejected, (state) => {
         state.status = 'error';
@@ -40,6 +40,7 @@ export const bikeSlice = createSlice({
   },
 });
 
+export const selectBike = (state) => state.bike;
 export const { setItems } = bikeSlice.actions;
 
 export default bikeSlice.reducer;

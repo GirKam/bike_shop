@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 
 import { setCategories } from '../redux/slices/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,23 +8,20 @@ import { BicycleItem } from '../components/BicycleItem';
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
 import Skeleton from '../components/Skeleton';
+import { selectFilter } from '../redux/slices/filterSlice';
+import { selectBike } from '../redux/slices/bikeSlice';
 
 import '../scss/app.scss';
-import { AppContext } from '../App';
 import { setOrderType } from '../redux/slices/filterSlice';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const categoriesRedux = useSelector((state) => state.filter.category);
-  const sort = useSelector((state) => state.filter.sort);
-  const orderType = useSelector((state) => state.filter.orderType);
-  const items = useSelector((state) => state.bike.items);
-  const status = useSelector((state) => state.bike.status);
 
-  const { searchValue } = useContext(AppContext);
+  const { orderType, categories, sort, searchValue } = useSelector(selectFilter);
+  const { status, items } = useSelector(selectBike);
 
   const searchVal = searchValue ? `search=${searchValue}` : '';
-  const category = categoriesRedux ? `category=${categoriesRedux}` : '';
+  const category = categories ? `category=${categories}` : '';
 
   const setCategoriesId = (id) => {
     dispatch(setCategories(id));
@@ -51,7 +48,7 @@ export const Home = () => {
   return (
     <div>
       <div className="content__top">
-        <Categories categories={categoriesRedux} setCategories={setCategoriesId} />
+        <Categories categories={categories} setCategories={setCategoriesId} />
         <Sort orderType={orderType} setOrderType={setOrder} />
       </div>
       <h2 className="content__title">Все велосипеды</h2>
