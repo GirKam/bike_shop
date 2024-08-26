@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { setCategories } from '../redux/slices/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBikes } from '../redux/slices/bikeSlice';
-
-import { BicycleItem } from '../components/BicycleItem';
-import { Categories } from '../components/Categories';
-import { Sort } from '../components/Sort';
+import { BicycleItem } from '../components/BicycleItem.tsx';
+import { Categories } from '../components/Categories.tsx';
+import { Sort } from '../components/Sort.tsx';
 import Skeleton from '../components/Skeleton';
 import { selectFilter } from '../redux/slices/filterSlice';
 import { selectBike } from '../redux/slices/bikeSlice';
@@ -14,7 +13,7 @@ import { selectBike } from '../redux/slices/bikeSlice';
 import '../scss/app.scss';
 import { setOrderType } from '../redux/slices/filterSlice';
 
-export const Home = () => {
+export const Home: FC = () => {
   const dispatch = useDispatch();
 
   const { orderType, categories, sort, searchValue } = useSelector(selectFilter);
@@ -23,15 +22,16 @@ export const Home = () => {
   const searchVal = searchValue ? `search=${searchValue}` : '';
   const category = categories ? `category=${categories}` : '';
 
-  const setCategoriesId = (id) => {
+  const setCategoriesId = (id: number) => {
     dispatch(setCategories(id));
   };
-  const setOrder = (id) => {
+  const setOrder = (id: string) => {
     dispatch(setOrderType(id));
   };
 
   const fetchBike = async () => {
     dispatch(
+      //@ts-ignore
       fetchBikes({
         category,
         searchVal,
@@ -49,7 +49,7 @@ export const Home = () => {
     <div>
       <div className="content__top">
         <Categories categories={categories} setCategories={setCategoriesId} />
-        <Sort orderType={orderType} setOrderType={setOrder} />
+        <Sort setOrderType={setOrder} />
       </div>
       <h2 className="content__title">Все велосипеды</h2>
 
@@ -59,7 +59,7 @@ export const Home = () => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(3)].map((_, index) => <Skeleton key={index} />)
-            : items.map((item) => {
+            : items.map((item: any) => {
                 return <BicycleItem key={item.id} {...item} />;
               })}
         </div>

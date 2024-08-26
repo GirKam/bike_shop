@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search } from './Search';
+// import { Search } from './Search';
+import { Search } from './Search/index.tsx';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
 export const Header = () => {
   const { totalPrice, items } = useSelector(selectCart);
-  const totalCount = items.reduce((prev, item) => prev + item.count, 0);
+  const totalCount = items.reduce((prev: string, item: any) => prev + item.count, 0);
   return (
     <div className="header">
       <div className="container">

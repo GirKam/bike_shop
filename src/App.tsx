@@ -1,15 +1,12 @@
-import React, { createContext, useState } from 'react';
-import { Header } from './components/Header';
-import { Home } from './pages/Home';
+import React from 'react';
+import { Header } from './components/Header.tsx';
+import { Home } from './pages/Home.tsx';
 import { Routes, Route } from 'react-router-dom';
-import { NotFound } from './pages/NotFound';
-import { Cart } from './pages/Cart';
+import { NotFound } from './pages/NotFound.tsx';
+import { Cart } from './pages/Cart.tsx';
 import './scss/app.scss';
-import { setSearchValue } from './redux/slices/filterSlice';
 
 function App() {
-  // const [searchValue, setSearchValue] = useState('');
-
   return (
     <div className="wrapper">
       <Header />

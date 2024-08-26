@@ -1,25 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
+import { selectSort } from '../redux/slices/filterSlice';
 
 export const Sort = ({ setOrderType }) => {
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
-  const sorted = [
+  const sort = useSelector(selectSort);
+
+  type SortItem = {
+    name: string;
+    sortProperty: string;
+  };
+  const sorted: SortItem[] = [
     { name: 'популярности', sortProperty: 'rating' },
     { name: 'цене', sortProperty: 'price' },
     { name: 'алфавит', sortProperty: 'title' },
   ];
   const [visible, setVisible] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef(null);
 
-  const sortActive = (obj) => {
+  const sortActive = (obj: SortItem) => {
     dispatch(setSort(obj));
     setVisible(false);
   };
 
   useEffect(() => {
-    document.body.addEventListener('click', { once: true }, (e) => {
+    document.body.addEventListener('click', { once: true }, (e: any) => {
       if (!e.composedPath().includes(sortRef.current)) {
         setVisible(false);
       }

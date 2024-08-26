@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const Categories = ({ categories, setCategories }) => {
+type CategoriesProps = {
+  categories: number;
+  setCategories: any;
+};
+export const Categories: FC<CategoriesProps> = ({ categories, setCategories }) => {
   const categotiesArr = ['Все', 'Шоссейные', 'Гревелы', 'МТБ', 'Городские', 'Двухподвесный'];
 
   return (
