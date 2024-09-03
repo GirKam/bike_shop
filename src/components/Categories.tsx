@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 type CategoriesProps = {
   categories: number;
-  setCategories: any;
+  setCategories: (i: number) => void;
 };
 export const Categories: FC<CategoriesProps> = ({ categories, setCategories }) => {
   const categotiesArr = ['Все', 'Шоссейные', 'Гревелы', 'МТБ', 'Городские', 'Двухподвесный'];

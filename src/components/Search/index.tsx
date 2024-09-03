@@ -3,7 +3,7 @@ import styles from './Search.module.scss';
 // import { useContext } from 'react';
 // import { AppContext } from '../../App';
 import debounce from 'lodash.debounce';
-import { setSearchValue } from '../../redux/slices/filterSlice';
+import { setSearchValue } from '../../redux/slices/filterSlice.ts';
 import { useDispatch } from 'react-redux';
 
 export const Search: FC = () => {
@@ -19,13 +19,13 @@ export const Search: FC = () => {
   };
 
   const debounceRef = useCallback(
-    debounce((str: any) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 500),
     [],
   );
 
-  const onChangeInput = (e: any) => {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     debounceRef(e.target.value);
   };

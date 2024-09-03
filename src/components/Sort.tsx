@@ -1,15 +1,17 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
-import { selectSort } from '../redux/slices/filterSlice';
+import { setSort, selectSort, setOrderType } from '../redux/slices/filterSlice.ts';
 
-export const Sort = ({ setOrderType }) => {
+export const Sort: FC = () => {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
 
   type SortItem = {
     name: string;
     sortProperty: string;
+  };
+  const setOrder = (id: string) => {
+    dispatch(setOrderType(id));
   };
   const sorted: SortItem[] = [
     { name: 'популярности', sortProperty: 'rating' },
@@ -25,8 +27,8 @@ export const Sort = ({ setOrderType }) => {
   };
 
   useEffect(() => {
-    document.body.addEventListener('click', { once: true }, (e: any) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    document.body.addEventListener('click', { once: true }, (e: MouseEvent) => {
+      if (sortRef.current && !e.composedPath().includes(sortRef.current)) {
         setVisible(false);
       }
     });
@@ -47,8 +49,8 @@ export const Sort = ({ setOrderType }) => {
             fill="#2C2C2C"
           />
         </svg>
-        <button onClick={() => setOrderType('asc')}> ↑ </button>
-        <button onClick={() => setOrderType('desc')}> ↓ </button>
+        <button onClick={() => setOrder('asc')}> ↑ </button>
+        <button onClick={() => setOrder('desc')}> ↓ </button>
         <div onClick={() => setVisible(true)}>
           <b>Сортировка по:</b>
           <span>{sort.name}</span>

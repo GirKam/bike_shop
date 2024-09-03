@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, selectCartItem } from '../redux/slices/cartSlice';
+import { addItem, CartItem, selectCartItem } from '../redux/slices/cartSlice.ts';
 
 type BicycleItemProps = {
   id: number;
@@ -15,19 +15,19 @@ export const BicycleItem: FC<BicycleItemProps> = ({ id, title, price, imageUrl, 
   const [typeActiv, setTypeActive] = useState(0);
   const [sizesActiv, setSizesActive] = useState(0);
   const typesNames = ['Черный', 'Серебро'];
-  // const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
   const cartItem = useSelector(selectCartItem(id));
 
   const added = cartItem ? cartItem.count : 0;
 
   const onClickAddItems = () => {
-    const itemCart = {
+    const itemCart: CartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typesNames[typeActiv],
       size: sizesActiv,
+      count: 0,
     };
     dispatch(addItem(itemCart));
   };

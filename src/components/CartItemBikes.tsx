@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem, removeItem, minusItem } from '../redux/slices/cartSlice';
+import { addItem, removeItem, minusItem } from '../redux/slices/cartSlice.ts';
 
 type CartItemBikesProps = {
   id: number;

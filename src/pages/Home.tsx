@@ -1,17 +1,14 @@
 import React, { FC, useEffect } from 'react';
 
-import { setCategories } from '../redux/slices/filterSlice';
+import { setCategories, selectFilter } from '../redux/slices/filterSlice.ts';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchBikes } from '../redux/slices/bikeSlice';
+import { fetchBikes, selectBike } from '../redux/slices/bikeSlice.ts';
 import { BicycleItem } from '../components/BicycleItem.tsx';
 import { Categories } from '../components/Categories.tsx';
 import { Sort } from '../components/Sort.tsx';
 import Skeleton from '../components/Skeleton';
-import { selectFilter } from '../redux/slices/filterSlice';
-import { selectBike } from '../redux/slices/bikeSlice';
 
 import '../scss/app.scss';
-import { setOrderType } from '../redux/slices/filterSlice';
 
 export const Home: FC = () => {
   const dispatch = useDispatch();
@@ -24,9 +21,6 @@ export const Home: FC = () => {
 
   const setCategoriesId = (id: number) => {
     dispatch(setCategories(id));
-  };
-  const setOrder = (id: string) => {
-    dispatch(setOrderType(id));
   };
 
   const fetchBike = async () => {
@@ -49,7 +43,7 @@ export const Home: FC = () => {
     <div>
       <div className="content__top">
         <Categories categories={categories} setCategories={setCategoriesId} />
-        <Sort setOrderType={setOrder} />
+        <Sort />
       </div>
       <h2 className="content__title">Все велосипеды</h2>
 
