@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItemBikes from '../components/CartItemBikes.tsx';
 import { clearItem, selectCart } from '../redux/slices/cartSlice.ts';
-// import {  } from '../redux/slices/cartSlice';
 
 export const Cart: FC = () => {
   const { items, totalPrice } = useSelector(selectCart);

@@ -1,17 +1,18 @@
 import React, { FC, useEffect } from 'react';
 
 import { setCategories, selectFilter } from '../redux/slices/filterSlice.ts';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchBikes, selectBike } from '../redux/slices/bikeSlice.ts';
 import { BicycleItem } from '../components/BicycleItem.tsx';
 import { Categories } from '../components/Categories.tsx';
 import { Sort } from '../components/Sort.tsx';
 import Skeleton from '../components/Skeleton';
+import { useAppDispatch } from '../redux/store.ts';
 
 import '../scss/app.scss';
 
 export const Home: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { orderType, categories, sort, searchValue } = useSelector(selectFilter);
   const { status, items } = useSelector(selectBike);
@@ -25,7 +26,6 @@ export const Home: FC = () => {
 
   const fetchBike = async () => {
     dispatch(
-      //@ts-ignore
       fetchBikes({
         category,
         searchVal,
