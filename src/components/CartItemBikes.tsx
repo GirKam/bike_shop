@@ -35,8 +35,13 @@ const CartItemBikes: FC<CartItemBikesProps> = ({ id, title, price, type, imageUr
       </div>
       <div className="cart__item-count">
         <button
+          disabled={count === 1}
           onClick={onClickMinus}
-          className="button button--outline button--circle cart__item-count-minus"
+          className={
+            count === 1
+              ? 'button button--outline button--circle cart__item-count-minus button--disabled'
+              : 'button button--outline button--circle cart__item-count-minus'
+          }
         >
           <svg
             width="10"
@@ -55,6 +60,7 @@ const CartItemBikes: FC<CartItemBikesProps> = ({ id, title, price, type, imageUr
             />
           </svg>
         </button>
+
         <b>{count}</b>
         <button
           onClick={onClickPlus}
